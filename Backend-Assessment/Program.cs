@@ -67,6 +67,15 @@ app.UseAuthentication();
 app.UseIdentityServer();
 app.UseAuthorization();
 
+app.UseCors(builder =>
+{
+    builder //.WithOrigins("https://localhost:port")
+        .SetIsOriginAllowed(_ => true)
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
+});
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
