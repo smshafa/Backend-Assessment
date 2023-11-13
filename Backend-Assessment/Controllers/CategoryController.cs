@@ -2,6 +2,7 @@
 using Backend_Assessment.Application.Features.Dto.Category;
 using Backend_Assessment.Application.Features.Dto.Pagination;
 using Backend_Assessment.Application.Features.Query.Category.GetCategories;
+using Backend_Assessment.Application.Features.Query.Category.GetCategory;
 using Backend_Assessment.Application.Features.Query.Product.GetProducts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,15 @@ public class CategoryController : ControllerBase
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(getCategoriesQuery, cancellationToken);
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [Route("GetCategory")]
+    public async Task<ActionResult<CategoryDto>> Get(int categoryId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetCategoryQuery(categoryId), cancellationToken);
 
         return Ok(result);
     }

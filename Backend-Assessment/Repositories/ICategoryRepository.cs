@@ -5,5 +5,5 @@ namespace Backend_Assessment.Repositories;
 
 public interface ICategoryRepository : IGenericRepository<Category, int>
 {
-    IQueryable<CategoryDto> GetOne(int id);
+    Category? GetOne(int id);
 }
