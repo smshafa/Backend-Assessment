@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 <img src="../ClientApp/Screenshot-Swagger.png">
 
-
+<img src="../ClientApp/Screenshot-UI.png">
 
 ## Development server
 
