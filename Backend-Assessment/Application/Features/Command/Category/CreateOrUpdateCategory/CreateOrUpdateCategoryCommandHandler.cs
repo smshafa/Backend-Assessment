@@ -18,7 +18,17 @@ public class CreateOrUpdateCategoryCommandHandler : IRequestHandler<CreateOrUpda
     public async Task Handle(CreateOrUpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = _mapper.Map<Models.Category>(request);
-        var registered = await _unitOfRepository.Categories.AddAsync(category);
+        var oldCategory = _unitOfRepository.Categories.GetAll().SingleOrDefault(cat => cat.Id == category.Id);
+        if (oldCategory is not null)
+        {
+            oldCategory.Name = category.Name;
+            oldCategory.Products = category.Products;
+        }
+        else
+        {
+            await _unitOfRepository.Categories.AddAsync(category);
+        }
+
         _unitOfRepository.Complete();
     } 
 }
