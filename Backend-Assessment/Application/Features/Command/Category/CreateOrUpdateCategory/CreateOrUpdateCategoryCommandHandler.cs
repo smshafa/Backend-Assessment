@@ -23,6 +23,7 @@ public class CreateOrUpdateCategoryCommandHandler : IRequestHandler<CreateOrUpda
         {
             oldCategory.Name = category.Name;
             oldCategory.Products = category.Products;
+            _unitOfRepository.Categories.Update(oldCategory);
         }
         else
         {

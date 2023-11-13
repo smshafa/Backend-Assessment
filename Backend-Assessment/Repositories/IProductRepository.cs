@@ -6,5 +6,5 @@ namespace Backend_Assessment.Repositories;
 public interface IProductRepository : IGenericRepository<Product, int>
 {
     IEnumerable<Product> GetProducts(string name);
-    IQueryable<ProductDto> GetOne(int id);
+    Product? GetOne(int id);
 }
