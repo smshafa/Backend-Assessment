@@ -15,8 +15,15 @@ public class CategoryController : ControllerBase
     public CategoryController(IMediator mediator) => _mediator = mediator;
 
     [HttpPost]
-    [Route("Create")]
-    public async Task Create(CreateOrUpdateCategoryCommand request, CancellationToken cancellationToken)
+    [Route("CreateCategory")]
+    public async Task CreateCategory(CreateOrUpdateCategoryCommand request, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(request, cancellationToken);
+    }
+    
+    [HttpPut]
+    [Route("UpdateCategory")]
+    public async Task UpdateCategory(CreateOrUpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         await _mediator.Send(request, cancellationToken);
     }
