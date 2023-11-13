@@ -8,7 +8,8 @@ public class UnitOfRepository : IUnitOfRepository
     public IProductRepository Products { get; set; }
     public ICategoryRepository Categories { get; set; }
 
-    public UnitOfRepository(IDbContext dbContext, IProductRepository productRepository, ICategoryRepository categoryRepository)
+    public UnitOfRepository(IDbContext dbContext, IProductRepository productRepository,
+        ICategoryRepository categoryRepository)
     {
         _context = dbContext;
         Products = productRepository;

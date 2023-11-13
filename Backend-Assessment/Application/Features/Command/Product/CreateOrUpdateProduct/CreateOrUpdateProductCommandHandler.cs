@@ -1,7 +1,6 @@
-﻿using Backend_Assessment.Application.Features.Command.Product.CreateOrUpdateProduct;
-using MediatR;
+﻿using MediatR;
 
-namespace Backend_Assessment.Application.Features.Command.Product.CreateProduct;
+namespace Backend_Assessment.Application.Features.Command.Product.CreateOrUpdateProduct;
 
 public class CreateOrUpdateProductCommandHandler : IRequestHandler<CreateOrUpdateProductCommand> 
 {
