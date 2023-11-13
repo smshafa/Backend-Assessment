@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Backend_Assessment.Application.Features.Command.Category.CreateOrUpdateCategory;
 using Backend_Assessment.Application.Features.Command.Product.CreateOrUpdateProduct;
+using Backend_Assessment.Application.Features.Dto.Category;
+using Backend_Assessment.Application.Features.Dto.Pagination;
+using Backend_Assessment.Application.Features.Dto.Product;
+using Backend_Assessment.Application.Features.Query.Product.GetProduct;
 using Backend_Assessment.Application.Features.Query.Product.GetProducts;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend_Assessment.Controllers
@@ -34,10 +32,29 @@ namespace Backend_Assessment.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult> GetProducts()
+        [Route("GetProducts")]
+        public async Task<ActionResult<PagedResultDto<ProductDto>>> GetProducts(int pageIndex, int pageSize,
+            string? filter, string? sorting, CancellationToken cancellationToken)
         {
-            var products = await _mediator.Send(new GetProductsQuery());
-            return Ok(products);
+            GetProductsQuery getCategoriesQuery = new GetProductsQuery()
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Filter = filter,
+                Sorting = sorting
+            };
+            var result = await _mediator.Send(getCategoriesQuery, cancellationToken);
+        
+            return Ok(result);
         }
+        
+        [HttpGet]
+        [Route("GetProduct")]
+        public async Task<ActionResult<CategoryDto>> Get(int productId, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetProductQuery(productId), cancellationToken);
+            return Ok(result);
+        }
+
     }
 }

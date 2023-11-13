@@ -28,10 +28,12 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Pag
     private IQueryable<CategoryDto> GetFilterQuery(GetCategoriesQuery filter)
     {
         var categories = _unitOfRepository.Categories.GetAll().AsNoTracking()
+            .Include(x => x.Products)
             .Select(x => new CategoryDto()
             {
                 Id = x.Id,
-                Name = x.Name
+                Name = x.Name,
+                Products = x.Products.ToList()
             })
             .WhereIf(!string.IsNullOrEmpty(filter.Filter), p => p.Name.Contains(filter.Filter))
             .OrderByDescending(p => p.Name);

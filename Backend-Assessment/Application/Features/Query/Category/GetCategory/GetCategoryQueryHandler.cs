@@ -16,13 +16,15 @@ public class GetCategoryQueryHandler : IRequestHandler<GetCategoryQuery, Categor
 
     public async Task<CategoryDto> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
     {
-        var result = _unitOfRepository.Categories.GetAll().AsNoTracking().Select(x => new CategoryDto()
-        {
-            Id = x.Id,
-            Name = x.Name
-        }).SingleOrDefault(x => x.Id == request.Id);
+        var result = _unitOfRepository.Categories.GetAll().AsNoTracking()
+            .Include(x => x.Products)
+            .Select(x => new CategoryDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Products = x.Products.ToList()
+            }).SingleOrDefault(x => x.Id == request.Id);
 
         return result;
     }
-
 }
