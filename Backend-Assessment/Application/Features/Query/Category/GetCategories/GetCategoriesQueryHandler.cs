@@ -1,18 +1,41 @@
-﻿using Backend_Assessment.Application.Features.Dto.Pagination;
-using Backend_Assessment.Application.Features.Query.Product.GetProducts;
+﻿using Backend_Assessment.Application.Features.Dto.Category;
+using Backend_Assessment.Application.Features.Dto.Pagination;
+using Backend_Assessment.Extensions;
+using Backend_Assessment.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend_Assessment.Application.Features.Query.Category.GetCategories;
 
-public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, PagedResultDto<Models.Category>>
+public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, PagedResultDto<CategoryDto>>
 {
-    public GetCategoriesQueryHandler()
+    private readonly IUnitOfRepository _unitOfRepository;
+    public GetCategoriesQueryHandler(IUnitOfRepository unitOfRepository)
     {
-        
+        _unitOfRepository = unitOfRepository;
     }
-    
-    public async Task<PagedResultDto<Models.Category>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+
+    public async Task<PagedResultDto<CategoryDto>> Handle(GetCategoriesQuery request,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var query = GetFilterQuery(request);
+        var count = await query.CountAsync();
+        var result = PagedResultDto<CategoryDto>.ToPagedList(query, count, request.PageIndex, request.PageSize);
+
+        return result;
+    }
+
+    private IQueryable<CategoryDto> GetFilterQuery(GetCategoriesQuery filter)
+    {
+        var categories = _unitOfRepository.Categories.GetAll().AsNoTracking()
+            .Select(x => new CategoryDto()
+            {
+                Id = x.Id,
+                Name = x.Name
+            })
+            .WhereIf(!string.IsNullOrEmpty(filter.Filter), p => p.Name.Contains(filter.Filter))
+            .OrderByDescending(p => p.Name);
+
+        return categories;
     }
 }
