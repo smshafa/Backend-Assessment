@@ -48,6 +48,16 @@ namespace Backend_Assessment.Controllers
             return Ok(result);
         }
         
+        [HttpPost]
+        [Route("GetProducts")]
+        public async Task<ActionResult<PagedResultDto<ProductDto>>> GetProducts(GetProductsQuery getProductsQuery,
+            CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(getProductsQuery, cancellationToken);
+
+            return Ok(result);
+        }
+        
         [HttpGet]
         [Route("GetProduct")]
         public async Task<ActionResult<CategoryDto>> Get(int productId, CancellationToken cancellationToken)
