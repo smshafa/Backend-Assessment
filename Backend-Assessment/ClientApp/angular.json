@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "Backend_Assessment"
+  "defaultProject": "Backend_Assessment",
+  "cli": {
+    "analytics": "bbb36b40-112b-4ab2-9d81-c80905c4f806"
+  }
 }
