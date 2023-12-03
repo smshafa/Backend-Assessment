@@ -45,8 +45,11 @@
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**"/>
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Application\Features\Command\" />
+      <Folder Include="Application\Features\Profile\" />
       <Folder Include="ClientApp\src\app\components\" />
       <Folder Include="ClientApp\src\app\services\" />
+      <Folder Include="Migrations\" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

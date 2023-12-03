@@ -1,8 +1,7 @@
 using AutoMapper;
-using Backend_Assessment.Application.Features.Dto.Category;
 using Backend_Assessment.Application.Features.Dto.Pagination;
 using Backend_Assessment.Application.Features.Profile;
-using Backend_Assessment.Application.Features.Query.Category.GetCategories;
+using Backend_Assessment.Application.Features.Query.Book.GetBusinessDay;
 using Backend_Assessment.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -36,10 +35,10 @@ public class CategoryControllerUnitTest
         var categoryController = new CategoryController(mediator.Object);
         Mock<PagedResultDto<CategoryDto>> mockPagedCategoryDto = new Mock<PagedResultDto<CategoryDto>>();
         
-        GetCategoriesQuery getCategoriesQuery = new GetCategoriesQuery();
-        mediator.Setup(m => m.Send(It.IsAny<GetCategoriesQuery>(), It.IsAny<CancellationToken>()));
+        GetBusinessDayQuery getBusinessDayQuery = new GetBusinessDayQuery();
+        mediator.Setup(m => m.Send(It.IsAny<GetBusinessDayQuery>(), It.IsAny<CancellationToken>()));
 
-        mediator.Setup(m => m.Send(It.IsAny<GetCategoriesQuery>()))
+        mediator.Setup(m => m.Send(It.IsAny<GetBusinessDayQuery>()))
             .Returns(Task.FromResult(mockPagedCategoryDto.Object));
 
         // var result = categoryController.GetCategories(getCategoriesQuery, CancellationToken.None) as ObjectResult;

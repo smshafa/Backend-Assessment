@@ -5,9 +5,9 @@ namespace Backend_Assessment.Repositories;
 
 public abstract class GenericRepository<T, Y> : IGenericRepository<T, Y> where T : class
 {
-    protected readonly OrderDbContext _context;
+    protected readonly BookDbContext _context;
 
-    protected GenericRepository(OrderDbContext context)
+    protected GenericRepository(BookDbContext context)
     {
         _context = context;
     }

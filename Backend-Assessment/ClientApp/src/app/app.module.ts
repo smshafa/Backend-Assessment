@@ -11,8 +11,8 @@ import {FetchDataComponent} from './fetch-data/fetch-data.component';
 import {ApiAuthorizationModule} from 'src/api-authorization/api-authorization.module';
 import {AuthorizeGuard} from 'src/api-authorization/authorize.guard';
 import {AuthorizeInterceptor} from 'src/api-authorization/authorize.interceptor';
-import {OrderComponent} from "./order/order.component";
 import {SharedModule} from "./shared/shared.module";
+import {BookComponent} from "./book/book.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import {SharedModule} from "./shared/shared.module";
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    OrderComponent,
+    BookComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -33,7 +33,7 @@ import {SharedModule} from "./shared/shared.module";
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'counter', component: CounterComponent},
       {path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard]},
-      {path: 'order', component: OrderComponent},
+      {path: 'book', component: BookComponent},
     ])
   ],
   providers: [

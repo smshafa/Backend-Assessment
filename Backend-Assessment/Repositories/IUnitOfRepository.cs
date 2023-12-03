@@ -2,7 +2,8 @@
 
 public interface IUnitOfRepository : IDisposable
 {
-    IProductRepository Products { get; }
-    ICategoryRepository Categories { get; }
+    public ICountryRepository Countries { get; }
+    public IHolidayRepository Holidays { get; }
+    public IWeekendRepository Weekends { get; }
     int Complete();
 }
