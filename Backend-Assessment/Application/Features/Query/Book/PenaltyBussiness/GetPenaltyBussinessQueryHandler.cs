@@ -18,7 +18,7 @@ public class GetPenaltyBussinessQueryHandler : IRequestHandler<GetPenaltyBussine
     {
         PenaltyBussinessDayDto penaltyDayDto = new PenaltyBussinessDayDto();
         int businessDays = CalculateBusinessDays(request.DateCheckedOut, request.DateCheckedIn, request.CountryId);
-        decimal penalty = CalculatePenalty(businessDays, request.CountryId);
+        decimal penalty = CalculatePenalty(businessDays);
 
         penaltyDayDto.Penalty = penalty;
         penaltyDayDto.BussinessDays = businessDays;
@@ -49,11 +49,13 @@ public class GetPenaltyBussinessQueryHandler : IRequestHandler<GetPenaltyBussine
     }
 
 
-    private decimal CalculatePenalty(int businessDays, int countryId)
+    private decimal CalculatePenalty(int businessDays)
     {
-        string currencyCode = _unitOfRepository.Countries.All.FirstOrDefault(c => c.Id == countryId).CurrencySign;
-        decimal penaltyAmount = businessDays * 5.00m;
-        string penaltyFormatted = currencyCode + penaltyAmount.ToString("F2");
+        decimal penaltyAmount = 0;
+        if (businessDays > 10)
+        {
+            penaltyAmount = (businessDays - 10) * 5.00m;
+        }
 
         return penaltyAmount;
     }
