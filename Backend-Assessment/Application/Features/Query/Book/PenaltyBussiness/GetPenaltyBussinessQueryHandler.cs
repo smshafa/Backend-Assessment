@@ -37,26 +37,19 @@ public class GetPenaltyBussinessQueryHandler : IRequestHandler<GetPenaltyBussine
         int businessDays = 0;
         for (DateTime date = dateCheckedIn; date <= dateCheckedOut; date = date.AddDays(1))
         {
-            var ss = date.DayOfWeek.ToString();
             DateOnly dateOnly = DateOnly.FromDateTime(date);
             if (!weekendDays.Contains(date.DayOfWeek.ToString()) && !holidays.Contains(dateOnly))
-            {
                 businessDays++;
-            }
         }
 
         return businessDays;
     }
-
-
+    
     private decimal CalculatePenalty(int businessDays)
     {
         decimal penaltyAmount = 0;
         if (businessDays > 10)
-        {
             penaltyAmount = (businessDays - 10) * 5.00m;
-        }
-
         return penaltyAmount;
     }
 }
